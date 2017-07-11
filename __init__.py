@@ -49,7 +49,7 @@ import bpy
 from . import XP_import
 
 def menu_func(self, context):
-    self.layout.operator(XPlaneImport.bl_idname, text="XPlane Object (.obj)")
+    self.layout.operator(XP_import.bl_idname, text="XPlane Object (.obj)")
     
 def register():
     bpy.utils.register_class(XP_import.XPlaneImport)
