@@ -35,7 +35,7 @@ bl_info = {
     "version": (1,0,1),
     "blender": (2,7,8),
     "api": 36273,
-    "location": "File > Import/Export > XPlane",
+    "location": "File > Import/Export > XPlane OLD",
     "description": "Import X-Plane obj files",
     "warning": "",
     "wiki_url": "https://github.com/daveprue/XPlaneImport/wiki",
@@ -49,7 +49,7 @@ import bpy
 from . import XP_import
 
 def menu_func(self, context):
-    self.layout.operator(XP_import.XPlaneImport.bl_idname, text="XPlane Object (.obj)")
+    self.layout.operator(XP_import.XPlaneImport.bl_idname, text="XPlane OLD Object (.obj)")
     
 def register():
     bpy.utils.register_class(XP_import.XPlaneImport)
