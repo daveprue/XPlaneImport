@@ -26,7 +26,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-#---------------------------------------------------------------------------	
+#---------------------------------------------------------------------------    
 
 import bpy
 import bmesh
@@ -66,8 +66,9 @@ class XPlaneImport(bpy.types.Operator):
         # Create mesh from given verts, faces.
         me.from_pydata(verts, [], faces)
 
-        # Assign the Material to the object
-        me.materials.append(material)
+        if material:
+            # Assign the Material to the object
+            me.materials.append(material)
 
         # Assign the UV coordinates to each vertex
         me.uv_textures.new(name="UVMap")
@@ -111,12 +112,13 @@ class XPlaneImport(bpy.types.Operator):
         a_trans = [ origin_temp ]
         trans_available = False;
         objects = []
+        material = None
         for lineStr in lines:
             line = lineStr.split()
             if (len(line) == 0):
                 continue
             
-            if(line[0] == 'TEXTURE'):
+            if(line[0] == 'TEXTURE') and len(line) > 1:
                 texfilename = line[1]
 
                 # Create and add a material
