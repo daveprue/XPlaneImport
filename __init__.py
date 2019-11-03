@@ -35,7 +35,7 @@ bl_info = {
     "version": (1,0,1),
     "blender": (2,7,8),
     "api": 36273,
-    "location": "File > Import/Export > XPlane OLD",
+    "location": "File > Import/Export > XPlane",
     "description": "Import X-Plane obj files",
     "warning": "",
     "wiki_url": "https://github.com/daveprue/XPlaneImport/wiki",
