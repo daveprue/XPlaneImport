@@ -7,6 +7,7 @@
 # MIT License
 #
 # Copyright (c) 2017 David C. Prue
+# Copyright (c) 2018 Jakob Klein
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -26,7 +27,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 #
-#---------------------------------------------------------------------------	
+#---------------------------------------------------------------------------
 
 import bpy
 import bmesh
@@ -89,6 +90,7 @@ class XPlaneImport(bpy.types.Operator):
         bpy.ops.mesh.select_loose()
         bpy.ops.mesh.delete(type='VERT')
         bpy.ops.object.mode_set(mode='OBJECT')
+        bpy.ops.object.shade_smooth()
 
         ob.select = False
 
@@ -118,13 +120,15 @@ class XPlaneImport(bpy.types.Operator):
             
             if(line[0] == 'TEXTURE'):
                 texfilename = line[1]
-
                 # Create and add a material
                 material = bpy.data.materials.new('Material')
 
                 # Create texture
                 tex = bpy.data.textures.new('Texture', type = 'IMAGE')
-                tex.image = bpy.data.images.load("%s\\%s" % (os.path.dirname(self.filepath), texfilename))
+                if os.path.isfile("%s\\%s" % (os.path.dirname(self.filepath), texfilename)):
+                    tex.image = bpy.data.images.load("%s\\%s" % (os.path.dirname(self.filepath), texfilename))
+                else:
+                    pass
                 tex.use_alpha = True
 
                 # Add Texture to the Material
@@ -160,7 +164,7 @@ class XPlaneImport(bpy.types.Operator):
                 trans_y = (float(line[3]) * -1)
                 trans_z = float(line[2])
                 o_t = Vector( (trans_x, trans_y, trans_z) )
-                a_trans[anim_nesting] = o_t
+                a_trans[anim_nesting] += o_t
                 origin_temp = origin_temp + o_t
                 trans_available = True
             
@@ -183,7 +187,6 @@ class XPlaneImport(bpy.types.Operator):
             obj_tmp = tuple( zip(*[iter(obj)]*3) )
             self.createMeshFromData('OBJ%d' % counter, orig, verts, obj_tmp, material, uv, normals)
             counter+=1
-        
+
         return
-        
 
